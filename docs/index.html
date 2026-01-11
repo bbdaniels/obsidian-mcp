@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Obsidian MCP Server</title>
+    <style>
+        :root {
+            --bg: #1a1a2e;
+            --card: #16213e;
+            --accent: #7c3aed;
+            --accent-light: #a78bfa;
+            --text: #e2e8f0;
+            --text-muted: #94a3b8;
+            --border: #334155;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            padding: 4rem 0 3rem;
+        }
+
+        .logo {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .tagline {
+            color: var(--text-muted);
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: var(--card);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border);
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-light);
+        }
+
+        .install-code {
+            background: var(--bg);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            font-family: 'SF Mono', Monaco, 'Courier New', monospace;
+            font-size: 0.95rem;
+            overflow-x: auto;
+            border: 1px solid var(--border);
+        }
+
+        .install-code .comment {
+            color: var(--text-muted);
+        }
+
+        .install-code .command {
+            color: #22d3ee;
+        }
+
+        .features {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .feature {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .feature-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .feature h3 {
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .feature p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .tools-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .tools-table th,
+        .tools-table td {
+            text-align: left;
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .tools-table th {
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .tools-table code {
+            background: var(--bg);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            color: var(--accent-light);
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: var(--accent-light);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">📝</div>
+            <h1>Obsidian MCP Server</h1>
+            <p class="tagline">Give Claude Code read/write access to your Obsidian vault</p>
+            <div class="buttons">
+                <a href="https://github.com/bbdaniels/obsidian-mcp-server" class="btn btn-primary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    GitHub
+                </a>
+                <a href="https://pypi.org/project/obsidian-mcp-server/" class="btn btn-secondary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                    PyPI
+                </a>
+            </div>
+        </header>
+
+        <div class="card">
+            <h2>Quick Start</h2>
+            <div class="install-code">
+                <div><span class="comment"># Install the package</span></div>
+                <div><span class="command">pip install obsidian-mcp-server</span></div>
+                <br>
+                <div><span class="comment"># Add to Claude Code</span></div>
+                <div><span class="command">claude mcp add obsidian -- python3 -m obsidian_mcp.server</span></div>
+                <br>
+                <div><span class="comment"># Restart Claude Code, then tell Claude:</span></div>
+                <div><span class="command">"Configure obsidian vault at /path/to/your/vault"</span></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Features</h2>
+            <div class="features">
+                <div class="feature">
+                    <span class="feature-icon">📖</span>
+                    <div>
+                        <h3>Read & Write Notes</h3>
+                        <p>Create, edit, and append to markdown files in your vault</p>
+                    </div>
+                </div>
+                <div class="feature">
+                    <span class="feature-icon">🔍</span>
+                    <div>
+                        <h3>Full-Text Search</h3>
+                        <p>Search across all notes in your vault instantly</p>
+                    </div>
+                </div>
+                <div class="feature">
+                    <span class="feature-icon">📅</span>
+                    <div>
+                        <h3>Daily Notes</h3>
+                        <p>Read or append to daily notes with configurable date format</p>
+                    </div>
+                </div>
+                <div class="feature">
+                    <span class="feature-icon">📁</span>
+                    <div>
+                        <h3>Browse Vault</h3>
+                        <p>List and navigate your vault's folder structure</p>
+                    </div>
+                </div>
+                <div class="feature">
+                    <span class="feature-icon">🔒</span>
+                    <div>
+                        <h3>Secure</h3>
+                        <p>Only accesses your configured vault directory</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Available Tools</h2>
+            <table class="tools-table">
+                <thead>
+                    <tr>
+                        <th>Tool</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>obsidian_configure</code></td>
+                        <td>Set vault path and daily notes settings</td>
+                    </tr>
+                    <tr>
+                        <td><code>obsidian_status</code></td>
+                        <td>Show current configuration and vault stats</td>
+                    </tr>
+                    <tr>
+                        <td><code>obsidian_read</code></td>
+                        <td>Read a note's contents</td>
+                    </tr>
+                    <tr>
+                        <td><code>obsidian_write</code></td>
+                        <td>Create or overwrite a note</td>
+                    </tr>
+                    <tr>
+                        <td><code>obsidian_append</code></td>
+                        <td>Append to a note (optionally under a heading)</td>
+                    </tr>
+                    <tr>
+                        <td><code>obsidian_search</code></td>
+                        <td>Search notes by content</td>
+                    </tr>
+                    <tr>
+                        <td><code>obsidian_list</code></td>
+                        <td>Browse vault structure</td>
+                    </tr>
+                    <tr>
+                        <td><code>obsidian_daily</code></td>
+                        <td>Read/append to daily notes</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <footer>
+            <p>Made for <a href="https://claude.ai">Claude Code</a> · MIT License · <a href="https://github.com/bbdaniels/obsidian-mcp-server">View on GitHub</a></p>
+        </footer>
+    </div>
+</body>
+</html>
