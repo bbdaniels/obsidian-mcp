@@ -69,6 +69,27 @@ Claude will run `obsidian_configure` to set up the vault path. Your configuratio
 | `obsidian_list` | Browse vault structure |
 | `obsidian_daily` | Read/append to daily notes |
 
+## Built-in Prompts
+
+The server includes MCP prompts that provide structured workflows for common note-taking patterns. These show up as invocable prompts in Claude Code.
+
+| Prompt | Description |
+|--------|-------------|
+| `session-start` | Review daily notes and project context before starting work |
+| `session-end` | Document accomplishments, decisions, and open questions at end of session |
+| `project-checkin` | Review and update a specific project's documentation |
+
+Each prompt accepts an optional `project` argument to focus on a specific project folder.
+
+## Automatic Instructions
+
+When this server is connected, Claude automatically receives guidance about when and how to use the Obsidian tools -- no `CLAUDE.md` configuration needed. The built-in instructions tell Claude to:
+
+- Check for project context at the start of sessions
+- Document decisions as they're made (not just at the end)
+- Update daily notes with session summaries
+- Search for existing notes before creating new ones
+
 ## Example Usage
 
 Once configured, you can ask Claude things like:
@@ -99,26 +120,17 @@ Config is stored at `~/.config/obsidian-mcp/config.json`:
 | `daily_notes_folder` | `Daily Notes` | Folder for daily notes |
 | `daily_notes_format` | `%Y-%m-%d` | Date format for daily note filenames |
 
-## Recommended Claude Instructions
+## Customizing Claude Instructions (Optional)
 
-Add this to your `~/.claude/CLAUDE.md` to have Claude automatically take notes:
+The server includes built-in instructions that guide Claude's note-taking behavior automatically. For additional customization, you can add to `~/.claude/CLAUDE.md`:
 
 ```markdown
 ## Obsidian Note-Taking
 
-Use the obsidian MCP tools to document work sessions and project progress.
-
-### Daily Notes
-At the end of significant work sessions, append a summary to today's daily note using `obsidian_daily`:
-- What was accomplished
-- Key decisions made
-- Any blockers or open questions
-
 ### Project Notes
-When working on a project, check if a corresponding folder exists in Obsidian (use `obsidian_list`). If so:
-- Document important decisions, architecture choices, or design rationale
-- Note any non-obvious implementation details worth remembering
-- Track open questions or future improvements
+- Vault uses project folders (e.g., MyProject/) with notes like Technical Notes.md, Overview.md
+- Always update BOTH daily notes AND project-specific notes
+- Include commit hashes and file references in technical notes
 ```
 
 ## License
