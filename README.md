@@ -2,6 +2,8 @@
 
 An [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) server that gives Claude Code read/write access to your Obsidian vault.
 
+**[Documentation](https://www.benjaminbdaniels.com/obsidian-mcp/)** | **[PyPI](https://pypi.org/project/obsidian-mcp/)** | **[GitHub](https://github.com/bbdaniels/obsidian-mcp)**
+
 ## Quick Start with Claude Code
 
 The fastest way to get up and running:
