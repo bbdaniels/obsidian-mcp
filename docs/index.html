@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Obsidian MCP Server</title>
+    <title>Obsidian MCP</title>
     <style>
         :root {
             --bg: #1a1a2e;
@@ -177,6 +177,18 @@
             color: var(--accent-light);
         }
 
+        .alt-install {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .alt-install p {
+            margin-bottom: 0.5rem;
+        }
+
         footer {
             text-align: center;
             padding: 3rem 0;
@@ -198,14 +210,14 @@
     <div class="container">
         <header>
             <div class="logo">📝</div>
-            <h1>Obsidian MCP Server</h1>
+            <h1>Obsidian MCP</h1>
             <p class="tagline">Give Claude Code read/write access to your Obsidian vault</p>
             <div class="buttons">
-                <a href="https://github.com/bbdaniels/obsidian-mcp-server" class="btn btn-primary">
+                <a href="https://github.com/bbdaniels/obsidian-mcp" class="btn btn-primary">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
                     GitHub
                 </a>
-                <a href="https://pypi.org/project/obsidian-mcp-server/" class="btn btn-secondary">
+                <a href="https://pypi.org/project/obsidian-mcp/" class="btn btn-secondary">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
                     PyPI
                 </a>
@@ -215,14 +227,18 @@
         <div class="card">
             <h2>Quick Start</h2>
             <div class="install-code">
-                <div><span class="comment"># Install the package</span></div>
-                <div><span class="command">pip install obsidian-mcp-server</span></div>
-                <br>
-                <div><span class="comment"># Add to Claude Code</span></div>
-                <div><span class="command">claude mcp add obsidian -- python3 -m obsidian_mcp.server</span></div>
+                <div><span class="comment"># Add to Claude Code (no install needed)</span></div>
+                <div><span class="command">claude mcp add obsidian -- uvx obsidian-mcp</span></div>
                 <br>
                 <div><span class="comment"># Restart Claude Code, then tell Claude:</span></div>
                 <div><span class="command">"Configure obsidian vault at /path/to/your/vault"</span></div>
+            </div>
+            <div class="alt-install">
+                <p>Or install persistently with pipx:</p>
+                <div class="install-code">
+                    <div><span class="command">pipx install obsidian-mcp</span></div>
+                    <div><span class="command">claude mcp add obsidian -- obsidian-mcp</span></div>
+                </div>
             </div>
         </div>
 
@@ -262,6 +278,13 @@
                     <div>
                         <h3>Secure</h3>
                         <p>Only accesses your configured vault directory</p>
+                    </div>
+                </div>
+                <div class="feature">
+                    <span class="feature-icon">🤖</span>
+                    <div>
+                        <h3>Automatic Instructions</h3>
+                        <p>Built-in guidance tells Claude when and how to take notes -- no manual config needed</p>
                     </div>
                 </div>
             </div>
@@ -313,8 +336,34 @@
             </table>
         </div>
 
+        <div class="card">
+            <h2>Built-in Prompts</h2>
+            <table class="tools-table">
+                <thead>
+                    <tr>
+                        <th>Prompt</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>session-start</code></td>
+                        <td>Review daily notes and project context before starting work</td>
+                    </tr>
+                    <tr>
+                        <td><code>session-end</code></td>
+                        <td>Document accomplishments, decisions, and open questions at end of session</td>
+                    </tr>
+                    <tr>
+                        <td><code>project-checkin</code></td>
+                        <td>Review and update a specific project's documentation</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
         <footer>
-            <p>Made for <a href="https://claude.ai">Claude Code</a> · MIT License · <a href="https://github.com/bbdaniels/obsidian-mcp-server">View on GitHub</a></p>
+            <p>Made for <a href="https://claude.ai">Claude Code</a> &middot; MIT License &middot; <a href="https://github.com/bbdaniels/obsidian-mcp">View on GitHub</a></p>
         </footer>
     </div>
 </body>
