@@ -1,6 +1,20 @@
-# Obsidian MCP Server
+# Obsidian MCP
 
 An [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) server that gives Claude Code read/write access to your Obsidian vault.
+
+## Quick Start with Claude Code
+
+The fastest way to get up and running:
+
+```bash
+claude mcp add obsidian -- uvx obsidian-mcp
+```
+
+Then restart Claude Code and tell it:
+
+> "Configure obsidian vault at /path/to/your/vault"
+
+That's it -- Claude can now read, write, and search your Obsidian notes.
 
 ## Features
 
@@ -12,41 +26,47 @@ An [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) server that 
 
 ## Installation
 
-### Via pip
+### Via uvx (recommended -- no install needed)
+
+If you set up via the Quick Start above, you don't need to install anything. `uvx` runs the package directly from PyPI in an isolated environment each time.
+
+### Via pipx (persistent install)
 
 ```bash
-pip install obsidian-mcp-server
+pipx install obsidian-mcp
 ```
 
-### Via pipx (recommended for CLI tools)
-
-```bash
-pipx install obsidian-mcp-server
-```
-
-### From source
-
-```bash
-git clone https://github.com/bbdaniels/obsidian-mcp-server.git
-cd obsidian-mcp-server
-pip install -e .
-```
-
-## Configure Claude Code
-
-Add the MCP server to Claude Code:
-
-```bash
-claude mcp add obsidian -- python3 -m obsidian_mcp.server
-```
-
-Or if installed via pipx:
+Then configure Claude Code:
 
 ```bash
 claude mcp add obsidian -- obsidian-mcp
 ```
 
-Then restart Claude Code.
+### Via pip
+
+```bash
+pip install obsidian-mcp
+```
+
+Then configure Claude Code:
+
+```bash
+claude mcp add obsidian -- python3 -m obsidian_mcp.server
+```
+
+### From source
+
+```bash
+git clone https://github.com/bbdaniels/obsidian-mcp.git
+cd obsidian-mcp
+pip install -e .
+```
+
+Then configure Claude Code:
+
+```bash
+claude mcp add obsidian -- obsidian-mcp
+```
 
 ## First-Time Setup
 

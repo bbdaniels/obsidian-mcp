@@ -1,5 +1,5 @@
 [project]
-name = "obsidian-mcp-server"
+name = "obsidian-mcp"
 version = "0.2.0"
 description = "MCP server giving Claude Code read/write access to Obsidian vaults"
 readme = "README.md"
@@ -24,9 +24,9 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/bbdaniels/obsidian-mcp-server"
-Repository = "https://github.com/bbdaniels/obsidian-mcp-server"
-Issues = "https://github.com/bbdaniels/obsidian-mcp-server/issues"
+Homepage = "https://github.com/bbdaniels/obsidian-mcp"
+Repository = "https://github.com/bbdaniels/obsidian-mcp"
+Issues = "https://github.com/bbdaniels/obsidian-mcp/issues"
 
 [build-system]
 requires = ["hatchling"]
