@@ -1,0 +1,34 @@
+# obsidian-mcp
+
+> MCP server that gives Claude Code read/write access to your Obsidian vault.
+
+## What It Does
+Connects Claude Code to an Obsidian vault via MCP, enabling reading, writing, searching, and browsing markdown notes. Includes daily note management and automatic instructions that guide Claude's note-taking behavior without manual configuration.
+
+## Install
+```bash
+claude mcp add obsidian -- uvx obsidian-mcp
+```
+
+Then tell Claude: "Configure obsidian vault at /path/to/your/vault"
+
+## Tools
+- `obsidian_configure` -- Set vault path and daily notes settings
+- `obsidian_status` -- Show current configuration and vault stats
+- `obsidian_read` -- Read a note's contents
+- `obsidian_write` -- Create or overwrite a note
+- `obsidian_append` -- Append to a note, optionally under a specific heading
+- `obsidian_search` -- Full-text search across the vault
+- `obsidian_list` -- List files and folders in the vault
+- `obsidian_daily` -- Read or append to daily notes
+
+## Prompts
+- `session-start` -- Review daily notes and project context before starting work
+- `session-end` -- Document accomplishments, decisions, and open questions
+- `project-checkin` -- Review and update a specific project's documentation
+
+## Configuration
+Config stored at `~/.config/obsidian-mcp/config.json`:
+- `vault_path` (required) -- Absolute path to your Obsidian vault
+- `daily_notes_folder` (default: `Daily Notes`) -- Folder for daily notes
+- `daily_notes_format` (default: `%Y-%m-%d`) -- Date format for daily note filenames
