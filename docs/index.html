@@ -179,7 +179,6 @@
     <nav>
         <a href="https://www.benjaminbdaniels.com">Benjamin B Daniels</a>
         <div class="nav-links">
-            <a href="https://pypi.org/project/obsidian-mcp/">PyPI</a>
             <a href="https://github.com/bbdaniels/obsidian-mcp">GitHub</a>
         </div>
     </nav>
@@ -217,12 +216,12 @@
 
         <h2>Quick Start</h2>
         <pre><code># Install and register with Claude Code (no install needed)
-claude mcp add obsidian -- uvx obsidian-mcp
+claude mcp add obsidian -- uvx --from git+https://github.com/bbdaniels/obsidian-mcp obsidian-mcp
 
 # Then tell Claude:
 # "Configure obsidian vault at /path/to/your/vault"</code></pre>
 
-        <p>Alternatively, install persistently via <code>pipx install obsidian-mcp</code> or <code>pip install obsidian-mcp</code>.</p>
+        <p>Alternatively, install persistently via <code>pipx install git+https://github.com/bbdaniels/obsidian-mcp</code>. Install from the repository: the name <code>obsidian-mcp</code> on PyPI belongs to a different project.</p>
 
         <h2>Tools</h2>
         <table>
@@ -252,7 +251,23 @@ claude mcp add obsidian -- uvx obsidian-mcp
             </tr>
             <tr>
                 <td><code>obsidian_search</code></td>
-                <td>Search notes by content</td>
+                <td>Search notes by text or regular expression</td>
+            </tr>
+            <tr>
+                <td><code>obsidian_info</code></td>
+                <td>Show a note's properties, tags, headings and outgoing links</td>
+            </tr>
+            <tr>
+                <td><code>obsidian_search_property</code></td>
+                <td>Find notes by a frontmatter property</td>
+            </tr>
+            <tr>
+                <td><code>obsidian_tags</code></td>
+                <td>List every tag with its count, or the notes carrying a tag</td>
+            </tr>
+            <tr>
+                <td><code>obsidian_backlinks</code></td>
+                <td>List the notes that link to a note</td>
             </tr>
             <tr>
                 <td><code>obsidian_list</code></td>

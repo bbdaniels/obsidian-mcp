@@ -7,7 +7,7 @@ Connects Claude Code to an Obsidian vault via MCP, enabling reading, writing, se
 
 ## Install
 ```bash
-claude mcp add obsidian -- uvx obsidian-mcp
+claude mcp add obsidian -- uvx --from git+https://github.com/bbdaniels/obsidian-mcp obsidian-mcp
 ```
 
 Then tell Claude: "Configure obsidian vault at /path/to/your/vault"
@@ -18,7 +18,11 @@ Then tell Claude: "Configure obsidian vault at /path/to/your/vault"
 - `obsidian_read` -- Read a note's contents
 - `obsidian_write` -- Create or overwrite a note
 - `obsidian_append` -- Append to a note, optionally under a specific heading
-- `obsidian_search` -- Full-text search across the vault
+- `obsidian_search` -- Full-text or regular expression search across the vault
+- `obsidian_info` -- Show a note's properties, tags, headings and outgoing links
+- `obsidian_search_property` -- Find notes by a frontmatter property
+- `obsidian_tags` -- List every tag with its count, or the notes carrying a tag
+- `obsidian_backlinks` -- List the notes that link to a note
 - `obsidian_list` -- List files and folders in the vault
 - `obsidian_daily` -- Read or append to daily notes
 

@@ -2,15 +2,17 @@
 
 An [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) server that gives Claude Code read/write access to your Obsidian vault.
 
-**[Documentation](https://www.benjaminbdaniels.com/obsidian-mcp/)** | **[PyPI](https://pypi.org/project/obsidian-mcp/)** | **[GitHub](https://github.com/bbdaniels/obsidian-mcp)**
+**[Documentation](https://www.benjaminbdaniels.com/obsidian-mcp/)** | **[GitHub](https://github.com/bbdaniels/obsidian-mcp)**
 
 ## Quick Start with Claude Code
 
 The fastest way to get up and running:
 
 ```bash
-claude mcp add obsidian -- uvx obsidian-mcp
+claude mcp add obsidian -- uvx --from git+https://github.com/bbdaniels/obsidian-mcp obsidian-mcp
 ```
+
+Install from this repository, as above. The name `obsidian-mcp` on PyPI belongs to a different project, so `uvx obsidian-mcp` or `pip install obsidian-mcp` installs that one, not this.
 
 Then restart Claude Code and tell it:
 
@@ -21,7 +23,8 @@ That's it -- Claude can now read, write, and search your Obsidian notes.
 ## Features
 
 - **Read & write notes** - Create, edit, and append to markdown files
-- **Search** - Full-text search across your vault
+- **Search** - Full-text and regular expression search across your vault
+- **Properties, tags and links** - Find notes by frontmatter property, by tag, or by the notes that link to them
 - **Daily notes** - Read or append to daily notes with configurable date format
 - **Browse** - List files and folders in your vault
 - **Secure** - Only accesses your configured vault directory
@@ -30,12 +33,12 @@ That's it -- Claude can now read, write, and search your Obsidian notes.
 
 ### Via uvx (recommended -- no install needed)
 
-If you set up via the Quick Start above, you don't need to install anything. `uvx` runs the package directly from PyPI in an isolated environment each time.
+If you set up via the Quick Start above, you don't need to install anything. `uvx` builds the package from this repository in an isolated environment and reuses it.
 
 ### Via pipx (persistent install)
 
 ```bash
-pipx install obsidian-mcp
+pipx install git+https://github.com/bbdaniels/obsidian-mcp
 ```
 
 Then configure Claude Code:
@@ -47,7 +50,7 @@ claude mcp add obsidian -- obsidian-mcp
 ### Via pip
 
 ```bash
-pip install obsidian-mcp
+pip install git+https://github.com/bbdaniels/obsidian-mcp
 ```
 
 Then configure Claude Code:
@@ -61,7 +64,8 @@ claude mcp add obsidian -- python3 -m obsidian_mcp.server
 ```bash
 git clone https://github.com/bbdaniels/obsidian-mcp.git
 cd obsidian-mcp
-pip install -e .
+pip install -e '.[dev]'
+pytest
 ```
 
 Then configure Claude Code:
@@ -87,7 +91,11 @@ Claude will run `obsidian_configure` to set up the vault path. Your configuratio
 | `obsidian_read` | Read a note's contents |
 | `obsidian_write` | Create or overwrite a note |
 | `obsidian_append` | Append to a note (optionally under a heading) |
-| `obsidian_search` | Search notes by content |
+| `obsidian_search` | Search notes by text or regular expression |
+| `obsidian_info` | Show a note's properties, tags, headings and outgoing links |
+| `obsidian_search_property` | Find notes by a frontmatter property (`exists`, `missing`, `equals`, `not_equals`, `contains`, `gt`, `gte`, `lt`, `lte`) |
+| `obsidian_tags` | List every tag with its count, or the notes carrying a tag |
+| `obsidian_backlinks` | List the notes that link to a note |
 | `obsidian_list` | Browse vault structure |
 | `obsidian_daily` | Read/append to daily notes |
 
@@ -124,7 +132,7 @@ Once configured, you can ask Claude things like:
 
 ## Configuration
 
-Config is stored at `~/.config/obsidian-mcp/config.json`:
+Set the vault with the `OBSIDIAN_VAULT_PATH` environment variable (for example `claude mcp add obsidian -e OBSIDIAN_VAULT_PATH=/path/to/vault -- ...`), which takes precedence, or let `obsidian_configure` store it at `~/.config/obsidian-mcp/config.json`:
 
 ```json
 {
