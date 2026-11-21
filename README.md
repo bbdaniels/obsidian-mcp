@@ -9,10 +9,10 @@ An [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) server that 
 The fastest way to get up and running:
 
 ```bash
-claude mcp add obsidian -- uvx --from git+https://github.com/bbdaniels/obsidian-mcp obsidian-mcp
+claude mcp add obsidian -- uvx obsidian-mcp-server
 ```
 
-On PyPI this project is [`obsidian-mcp-server`](https://pypi.org/project/obsidian-mcp-server/). The name `obsidian-mcp` there belongs to a different project, so `uvx obsidian-mcp` or `pip install obsidian-mcp` installs that one, not this. Installing from this repository, as above, always gives the current version.
+On PyPI this project is [`obsidian-mcp-server`](https://pypi.org/project/obsidian-mcp-server/). The name `obsidian-mcp` there belongs to a different project, so `uvx obsidian-mcp` or `pip install obsidian-mcp` installs that one, not this. To run the unreleased code on `main`, use `uvx --from git+https://github.com/bbdaniels/obsidian-mcp obsidian-mcp`.
 
 Then restart Claude Code and tell it:
 
@@ -33,12 +33,12 @@ That's it -- Claude can now read, write, and search your Obsidian notes.
 
 ### Via uvx (recommended -- no install needed)
 
-If you set up via the Quick Start above, you don't need to install anything. `uvx` builds the package from this repository in an isolated environment and reuses it.
+If you set up via the Quick Start above, you don't need to install anything. `uvx` runs the package from PyPI in an isolated environment.
 
 ### Via pipx (persistent install)
 
 ```bash
-pipx install git+https://github.com/bbdaniels/obsidian-mcp
+pipx install obsidian-mcp-server
 ```
 
 Then configure Claude Code:
@@ -50,7 +50,7 @@ claude mcp add obsidian -- obsidian-mcp
 ### Via pip
 
 ```bash
-pip install git+https://github.com/bbdaniels/obsidian-mcp
+pip install obsidian-mcp-server
 ```
 
 Then configure Claude Code:

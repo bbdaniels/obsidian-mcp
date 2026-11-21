@@ -7,7 +7,7 @@ Connects Claude Code to an Obsidian vault via MCP, enabling reading, writing, se
 
 ## Install
 ```bash
-claude mcp add obsidian -- uvx --from git+https://github.com/bbdaniels/obsidian-mcp obsidian-mcp
+claude mcp add obsidian -- uvx obsidian-mcp-server
 ```
 
 Then tell Claude: "Configure obsidian vault at /path/to/your/vault"
