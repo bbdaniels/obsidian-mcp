@@ -47,6 +47,10 @@ def test_the_environment_variable_beats_the_config_file(vault, tmp_path):
     assert server.get_vault_path() == vault
 
 
+def test_the_server_reports_the_installed_version():
+    assert server.package_version() == server.version("obsidian-mcp-server") != ""
+
+
 def test_no_vault_and_unknown_tool(monkeypatch, tmp_path):
     monkeypatch.delenv("OBSIDIAN_VAULT_PATH", raising=False)
     monkeypatch.setattr(server, "get_config_path", lambda: tmp_path / "none.json")

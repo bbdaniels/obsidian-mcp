@@ -2,7 +2,7 @@
 
 An [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) server that gives Claude Code read/write access to your Obsidian vault.
 
-**[Documentation](https://www.benjaminbdaniels.com/obsidian-mcp/)** | **[GitHub](https://github.com/bbdaniels/obsidian-mcp)**
+**[Documentation](https://www.benjaminbdaniels.com/obsidian-mcp/)** | **[PyPI](https://pypi.org/project/obsidian-mcp-server/)** | **[GitHub](https://github.com/bbdaniels/obsidian-mcp)**
 
 ## Quick Start with Claude Code
 
@@ -12,7 +12,7 @@ The fastest way to get up and running:
 claude mcp add obsidian -- uvx --from git+https://github.com/bbdaniels/obsidian-mcp obsidian-mcp
 ```
 
-Install from this repository, as above. The name `obsidian-mcp` on PyPI belongs to a different project, so `uvx obsidian-mcp` or `pip install obsidian-mcp` installs that one, not this.
+On PyPI this project is [`obsidian-mcp-server`](https://pypi.org/project/obsidian-mcp-server/). The name `obsidian-mcp` there belongs to a different project, so `uvx obsidian-mcp` or `pip install obsidian-mcp` installs that one, not this. Installing from this repository, as above, always gives the current version.
 
 Then restart Claude Code and tell it:
 

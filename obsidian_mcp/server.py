@@ -387,7 +387,7 @@ async def on_get_prompt(ctx, params) -> GetPromptResult:
 
 def package_version() -> str:
     try:
-        return version("obsidian-mcp")
+        return version("obsidian-mcp-server")  # the name on PyPI; "obsidian-mcp" there is another project
     except PackageNotFoundError:
         return ""
 

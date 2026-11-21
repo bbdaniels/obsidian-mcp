@@ -1,5 +1,5 @@
 [project]
-name = "obsidian-mcp"
+name = "obsidian-mcp-server"
 version = "0.3.0"
 description = "MCP server giving Claude Code read/write access to Obsidian vaults"
 readme = "README.md"
@@ -44,3 +44,4 @@ testpaths = ["tests"]
 
 [project.scripts]
 obsidian-mcp = "obsidian_mcp.server:main"
+obsidian-mcp-server = "obsidian_mcp.server:main"
