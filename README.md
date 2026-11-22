@@ -23,7 +23,7 @@ That's it -- Claude can now read, write, and search your Obsidian notes.
 ## Features
 
 - **Read & write notes** - Create, edit, and append to markdown files
-- **Search** - Full-text and regular expression search across your vault
+- **Search** - Ranked full text search of note sections, with regular expression search beside it
 - **Properties, tags and links** - Find notes by frontmatter property, by tag, or by the notes that link to them
 - **Daily notes** - Read or append to daily notes with configurable date format
 - **Browse** - List files and folders in your vault
@@ -91,13 +91,33 @@ Claude will run `obsidian_configure` to set up the vault path. Your configuratio
 | `obsidian_read` | Read a note's contents |
 | `obsidian_write` | Create or overwrite a note |
 | `obsidian_append` | Append to a note (optionally under a heading) |
-| `obsidian_search` | Search notes by text or regular expression |
+| `obsidian_search` | Ranked full text search of note sections, or a regular expression scan |
 | `obsidian_info` | Show a note's properties, tags, headings and outgoing links |
 | `obsidian_search_property` | Find notes by a frontmatter property (`exists`, `missing`, `equals`, `not_equals`, `contains`, `gt`, `gte`, `lt`, `lte`) |
 | `obsidian_tags` | List every tag with its count, or the notes carrying a tag |
 | `obsidian_backlinks` | List the notes that link to a note |
 | `obsidian_list` | Browse vault structure |
 | `obsidian_daily` | Read/append to daily notes |
+
+## Search
+
+`obsidian_search` answers a plain-word query from a full text index of the vault, kept in SQLite (FTS5) and ranked by BM25.
+
+- **One result per section.** A note is split at its `## ` and `### ` headings; the text before the first such heading is a section of its own. Each result gives the note, the section heading, the line, and a snippet.
+- **Query syntax.** Every word is required. A `"quoted phrase"` must appear as written. Operators and punctuation (`OR`, `NOT`, `*`, `-`, `:`, parentheses) are taken as text, so any query is safe to pass as typed. Matching ignores case and accents and finds word forms (`index` also finds `indexes`).
+- **What is searched.** The text of each section, its heading, and the note's title and path. Frontmatter is not searched; use `obsidian_search_property` for it.
+- **Superseded sections.** A section whose first line is `Superseded YYYY-MM-DD by [[Note#Heading]].` is shown with `superseded: YYYY-MM-DD` and ranked after every section that is not.
+- **Regular expressions.** With `regex: true`, or with `case_sensitive: true`, the search scans whole files in path order, frontmatter included, as it always has. A query with no word in it (only punctuation) is scanned too.
+
+The index is a cache at `<vault>/.obsidian/mcp-search-index.db` (add it, with its `-wal` and `-shm` files, to the vault's `.gitignore` if the vault is in git). It is built on the first search, in a few seconds for a vault of a few thousand notes, and brought up to date at every search afterwards: a note whose modification time or size changed is indexed again, a new note added, a deleted one dropped. A search when nothing changed takes a few tens of milliseconds. The database uses a write-ahead log, so several sessions can search at once; one that cannot update the index in time answers from the index as it stands and says how many changed notes it may miss. A damaged database, or one from another version, is deleted and built again. Where Python's SQLite has no FTS5, the search falls back to the scan and the answer says so.
+
+The same search runs without the server:
+
+```bash
+python -m obsidian_mcp.search "quoted phrase" other words --folder Projects --max-results 20
+```
+
+It reads the vault from `--vault`, else `OBSIDIAN_VAULT_PATH`, else the saved configuration, takes `--regex` and `--case-sensitive`, and prints exactly what the tool answers.
 
 ## Built-in Prompts
 

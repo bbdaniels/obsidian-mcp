@@ -93,8 +93,11 @@ def test_regex_search(vault):
 
 
 def test_search_respects_folder_and_limit(vault):
-    assert found(ops.search(vault, "status", folder="Beta")) == {"Beta/Tasks.md", "Beta/Overview.md"}
-    assert len(found(ops.search(vault, "status", max_results=1))) == 1
+    # Plain words are looked up in the index, which leaves frontmatter out but holds each note's path.
+    assert found(ops.search(vault, "beta", folder="Beta")) == {"Beta/Tasks.md", "Beta/Overview.md", "Beta/Over view.md"}
+    assert found(ops.search(vault, "status", folder="Beta")) == set()
+    assert found(ops.search(vault, "^status", folder="Beta", regex=True)) == {"Beta/Tasks.md", "Beta/Overview.md"}
+    assert len(found(ops.search(vault, "status", max_results=1, regex=True))) == 1
 
 
 # ---------------------------------------------------------------- properties

@@ -18,7 +18,7 @@ Then tell Claude: "Configure obsidian vault at /path/to/your/vault"
 - `obsidian_read` -- Read a note's contents
 - `obsidian_write` -- Create or overwrite a note
 - `obsidian_append` -- Append to a note, optionally under a specific heading
-- `obsidian_search` -- Full-text or regular expression search across the vault
+- `obsidian_search` -- Ranked full text search of note sections (SQLite FTS5), or a regular expression scan
 - `obsidian_info` -- Show a note's properties, tags, headings and outgoing links
 - `obsidian_search_property` -- Find notes by a frontmatter property
 - `obsidian_tags` -- List every tag with its count, or the notes carrying a tag

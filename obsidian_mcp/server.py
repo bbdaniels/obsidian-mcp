@@ -135,13 +135,18 @@ TOOLS = [
           content=_arg("string", "Content to append to the note"),
           heading=_arg("string", "Optional: append under this heading (creates if doesn't exist)")),
     _tool("obsidian_search",
-          "Search for notes containing specific text or matching a regular expression. Returns matching file paths, line numbers and snippets. Use before creating new notes to find existing relevant documentation.",
+          "Search the vault. Plain words are looked up in a full text index of note sections (split at ## and ### headings) "
+          "and ranked by relevance: every word is required, a \"quoted phrase\" is kept together, and note titles, paths "
+          "and headings count; frontmatter is not searched. Each result gives the note, the section heading, the line, a "
+          "snippet, and 'superseded: YYYY-MM-DD' for a section marked superseded, which is ranked after live ones. "
+          "A regular expression or a case-sensitive query scans whole files in path order instead. "
+          "Use before creating new notes to find existing relevant documentation.",
           required=("query",),
-          query=_arg("string", "Text to search for, or a Python regular expression when regex is true"),
+          query=_arg("string", "Words to find, or a Python regular expression when regex is true"),
           folder=FOLDER,
           max_results=_arg("integer", "Maximum results to return (default: 10)"),
-          regex=_arg("boolean", "Treat the query as a regular expression (default: false)"),
-          case_sensitive=_arg("boolean", "Match case exactly (default: false)")),
+          regex=_arg("boolean", "Treat the query as a regular expression and scan the files (default: false)"),
+          case_sensitive=_arg("boolean", "Match case exactly, scanning the files for the literal text (default: false)")),
     _tool("obsidian_info",
           "Show a note's metadata without its text: frontmatter properties, tags, headings, outgoing links, size and modified time.",
           required=("path",),

@@ -5,6 +5,7 @@ text the tool answers with. Nothing here knows about MCP, so it is tested
 directly (tests/test_vault.py).
 """
 
+import os
 import re
 from datetime import date, datetime
 from pathlib import Path
@@ -48,10 +49,18 @@ def _inside(vault: Path, path: Path) -> Optional[Path]:
 
 
 def notes(vault: Path, folder: Path) -> Iterator[Path]:
-    """Every note under a folder, skipping hidden files and folders (.obsidian, .git, .trash)."""
-    for path in sorted(folder.rglob("*.md")):
-        if not any(part.startswith(".") for part in path.relative_to(vault).parts):
-            yield path
+    """Every note under a folder in path order, skipping hidden files and folders (.obsidian, .git, .trash).
+
+    Hidden folders are pruned from the walk rather than filtered after it, so a large .git costs nothing.
+    """
+    if any(part.startswith(".") for part in folder.relative_to(vault).parts):
+        return
+    found = []
+    for top, folders, files in os.walk(folder):
+        folders[:] = [name for name in folders if not name.startswith(".")]
+        found += [os.path.join(top, name) for name in files if name.endswith(".md") and not name.startswith(".")]
+    for path in sorted(found, key=lambda path: path.split(os.sep)):  # the order of Path objects, by part
+        yield Path(path)
 
 
 def _read(path: Path) -> Optional[str]:
@@ -171,9 +180,31 @@ def _markdown_link_points_to(vault: Path, source: Path, target: str, note: Path)
 
 def search(vault: Path, query: str, folder: str = "", max_results: int = 10,
            regex: bool = False, case_sensitive: bool = False) -> str:
+    """A plain-word query is answered from the ranked index of sections (search.py).
+
+    A regular expression, a case-sensitive query, or one with no word in it is
+    answered by scanning the files in path order, as is any query where the
+    index cannot be used, and then the answer says why.
+    """
     root = resolve_folder(vault, folder)
     if root is None or not root.exists():
         return f"Folder not found: {folder}"
+    note = ""
+    if not regex and not case_sensitive:
+        from . import search as index
+        within = root.relative_to(vault).as_posix()
+        try:
+            answer = index.ranked(vault, query, "" if within == "." else within, max_results)
+        except index.IndexUnavailable as why:
+            answer = None
+            note = f"Note: the full text index is unavailable ({why}), so this is an unranked scan in path order.\n\n"
+        if answer is not None:
+            return answer
+    return note + _scan(vault, root, query, max_results, regex, case_sensitive)
+
+
+def _scan(vault: Path, root: Path, query: str, max_results: int, regex: bool, case_sensitive: bool) -> str:
+    """Every note under root in path order, with its first match of a literal text or a regular expression."""
     try:
         pattern = re.compile(query if regex else re.escape(query),
                              (0 if case_sensitive else re.IGNORECASE) | re.MULTILINE)
